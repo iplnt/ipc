@@ -61,17 +61,7 @@
   </style>
 </head>
 <body>
-
-  <!-- BOTÓN DE INSTALACIÓN -->
-  <button id="btn-instalar">
-    <i class="fa-solid fa-download"></i> Instalar App
-  </button>
-
-  <!-- AQUÍ PONES EL ENLACE DE TU SCRIPT DE INTERPLANET -->
-  <iframe src="https://script.google.com/macros/s/AKfycbw2lc2Vaa9KD3uNW8tcUWCOpODDLr6XTlk2jTfC-nJlkLRmDiAxAwIb6EgoJp7UBSZ7yw/exec" allowfullscreen></iframe>
-
-  <script>
-    // 1. REGISTRO DEL SERVICE WORKER (De tu código original)
+<script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
@@ -83,29 +73,6 @@
           });
       });
     }
-
-    // 2. LÓGICA DEL BOTÓN DE INSTALACIÓN
-    let eventoInstalacionDiferido;
-    const btnInstalar = document.getElementById('btn-instalar');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault(); // Evita el banner por defecto
-      eventoInstalacionDiferido = e; // Guarda el evento
-      btnInstalar.style.display = 'flex'; // Muestra nuestro botón flotante
-    });
-
-    btnInstalar.addEventListener('click', async () => {
-      btnInstalar.style.display = 'none'; // Oculta el botón
-      eventoInstalacionDiferido.prompt(); // Lanza la ventana nativa del celular
-      const { outcome } = await eventoInstalacionDiferido.userChoice;
-      eventoInstalacionDiferido = null;
-    });
-
-    window.addEventListener('appinstalled', () => {
-      btnInstalar.style.display = 'none';
-      eventoInstalacionDiferido = null;
-    });
   </script>
-
 </body>
 </html>
