@@ -1,4 +1,4 @@
-const CACHE_NAME = 'interplanet-pwa-v1';
+const CACHE_NAME = 'interplanet-v1';
 const urlsToCache = [
   './',
   './index.html',
@@ -15,6 +15,8 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
-      .then(response => response || fetch(event.request))
+      .then(response => {
+        return response || fetch(event.request);
+      })
   );
 });
