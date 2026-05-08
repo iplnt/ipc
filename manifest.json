@@ -1,6 +1,6 @@
 {
-  "name": "IP Finanzas",
-  "short_name": "IP Finanzas",
+  "name": "Interplanet Finanzas",
+  "short_name": "Interplanet",
   "description": "Plataforma de fondo de ahorros y créditos",
   "start_url": "./index.html",
   "display": "standalone",
@@ -21,4 +21,3 @@
     }
   ]
 }
-
