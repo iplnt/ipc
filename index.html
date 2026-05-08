@@ -5,42 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>IP Finanzas</title>
   
+  <!-- Configuración PWA -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4338ca">
+  <meta name="theme-color" content="#4338ca"> <!-- Azul de Interplanet -->
+  
+ 
   <link rel="apple-touch-icon" href="assets/icon-192x192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+  <!-- Iconos para el botón de instalar -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    /* CSS para que el Iframe ocupe el 100% de la pantalla sin bordes */
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden; /* Evita doble scroll */
-      background-color: #f8fafc;
+    
+    body, html { 
+      margin: 0; 
+      padding: 0; 
+      height: 100%; 
+      width: 100%; 
+      overflow: hidden; 
+      background-color: #f8fafc; /* Color de fondo base de Interplanet */
     }
-    iframe {
-      width: 100vw;
-      height: 100vh;
+    iframe { 
+      border: none; 
+      width: 100%; 
+      height: 100%; 
+      display: block; 
+    }
+
+    /* Estilos del botón flotante de instalación */
+    #btn-instalar {
+      display: none; /* Oculto por defecto */
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #4338ca; /* Azul corporativo */
+      color: white;
       border: none;
-      display: block;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(67, 56, 202, 0.4);
+      z-index: 9999; 
+      cursor: pointer;
+      align-items: center;
+      gap: 10px;
+    }
+    #btn-instalar:active {
+      transform: translateX(-50%) scale(0.95);
     }
   </style>
 </head>
 <body>
 
+  <!-- BOTÓN DE INSTALACIÓN -->
+  <button id="btn-instalar">
+    <i class="fa-solid fa-download"></i> Instalar App
+  </button>
+
+  <!-- AQUÍ PONES EL ENLACE DE TU SCRIPT DE INTERPLANET -->
   <iframe src="https://script.google.com/macros/s/AKfycbw2lc2Vaa9KD3uNW8tcUWCOpODDLr6XTlk2jTfC-nJlkLRmDiAxAwIb6EgoJp7UBSZ7yw/exec" allowfullscreen></iframe>
 
   <script>
+    // 1. REGISTRO DEL SERVICE WORKER (De tu código original)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('PWA Lista y registrada.'))
-          .catch(err => console.error('Error en PWA:', err));
+        navigator.serviceWorker.register('sw.js')
+          .then(registration => {
+            console.log('ServiceWorker registrado con éxito:', registration.scope);
+          })
+          .catch(error => {
+            console.log('Error al registrar el ServiceWorker:', error);
+          });
       });
     }
+
+    // 2. LÓGICA DEL BOTÓN DE INSTALACIÓN
+    let eventoInstalacionDiferido;
+    const btnInstalar = document.getElementById('btn-instalar');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); // Evita el banner por defecto
+      eventoInstalacionDiferido = e; // Guarda el evento
+      btnInstalar.style.display = 'flex'; // Muestra nuestro botón flotante
+    });
+
+    btnInstalar.addEventListener('click', async () => {
+      btnInstalar.style.display = 'none'; // Oculta el botón
+      eventoInstalacionDiferido.prompt(); // Lanza la ventana nativa del celular
+      const { outcome } = await eventoInstalacionDiferido.userChoice;
+      eventoInstalacionDiferido = null;
+    });
+
+    window.addEventListener('appinstalled', () => {
+      btnInstalar.style.display = 'none';
+      eventoInstalacionDiferido = null;
+    });
   </script>
+
 </body>
 </html>
