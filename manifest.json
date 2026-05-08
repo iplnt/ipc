@@ -1,7 +1,7 @@
 {
   "name": "Interplanet Finanzas",
   "short_name": "Interplanet",
-  "description": "Plataforma de fondo de ahorros y créditos",
+  "description": "Fondo de Ahorros y Créditos",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8fafc",
@@ -9,15 +9,14 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "assets/icon-192x192.png",
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjgKugnSAV4k_0diy2jS6GkjNUlQ31vzjk3I3vFYNB5J_v7B0-bCiXDKX1HUmsIUpdTn9m0HzhKJuRQjx7Ew5Wl68UiYxUZPqPM_5L10qdPqQd9sTCt75BT_N2spDmLq7egBgUs6JwbNc9FMz4OUP1yBI2gdgyMWfuCCrz1ACxBfmD0KPJ1tpgzu_b81CSt/s192/ipwallet.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/icon-512x512.png",
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjgKugnSAV4k_0diy2jS6GkjNUlQ31vzjk3I3vFYNB5J_v7B0-bCiXDKX1HUmsIUpdTn9m0HzhKJuRQjx7Ew5Wl68UiYxUZPqPM_5L10qdPqQd9sTCt75BT_N2spDmLq7egBgUs6JwbNc9FMz4OUP1yBI2gdgyMWfuCCrz1ACxBfmD0KPJ1tpgzu_b81CSt/s512/ipwallet.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
