@@ -1,7 +1,7 @@
 {
   "name": "IP Finanzas",
   "short_name": "IP-FINANZAS",
-  "description": "Fondo de Ahorros y Crédito.",
+  "description": "Fondo de Ahorros y Crédito",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8fafc",
