@@ -1,52 +1,12 @@
 {
   "name": "IP Finanzas",
-  "short_name": "IP Finanzas",
-  "description": "Sistema de Ahorros, Créditos y Administración Financiera",
-
-  "id": "/",
+  "short_name": "IP-FINANZAS",
+  "description": "Fondo de Ahorros y Crédito",
   "start_url": "./index.html",
-  "scope": "./",
-
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone"],
-
-  "orientation": "portrait-primary",
-
-  "theme_color": "#005490",
   "background_color": "#f8fafc",
-
-  "lang": "es-CO",
-  "dir": "ltr",
-
-  "categories": [
-    "finance",
-    "business",
-    "productivity"
-  ],
-
-  "prefer_related_applications": false,
-
-  "shortcuts": [
-    {
-      "name": "Ahorros",
-      "short_name": "Ahorros",
-      "description": "Ver los ahorros",
-      "url": "./index.html#ahorros"
-    },
-    {
-      "name": "Créditos",
-      "short_name": "Créditos",
-      "description": "Administrar créditos",
-      "url": "./index.html#creditos"
-    },
-    {
-      "name": "Movimientos",
-      "short_name": "Movimientos",
-      "description": "Ver historial",
-      "url": "./index.html#movimientos"
-    }
-  ],
-
+  "theme_color": "#005490",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "https://blogger.googleusercontent.com/img/a/AVvXsEis64DMk_3-uwcnMyzAlE7hWtcD8rhMSFsQtb-A1JmNbfxPg0U2JP08cgxxKNdwnC_s2hvbNxUK5MqctD3FoIxXmL2Dr5WQTT6nv71Seo-LavvKArKyT9eSwFMRcCGehQ-u-8naqJ3bwk9nAxIrILhpp_i1i_fkJ5WRc2CKxJpyXJkUxYqlPFInJX4Zc1nt",
