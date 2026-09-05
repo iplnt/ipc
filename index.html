@@ -8,24 +8,22 @@
   
   <!-- Configuración PWA -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#005490"> <!-- Azul de Interplanet -->
+  <meta name="theme-color" content="#005490">
   
-  <link rel="apple-touch-icon" https://blogger.googleusercontent.com/img/a/AVvXsEis64DMk_3-uwcnMyzAlE7hWtcD8rhMSFsQtb-A1JmNbfxPg0U2JP08cgxxKNdwnC_s2hvbNxUK5MqctD3FoIxXmL2Dr5WQTT6nv71Seo-LavvKArKyT9eSwFMRcCGehQ-u-8naqJ3bwk9nAxIrILhpp_i1i_fkJ5WRc2CKxJpyXJkUxYqlPFInJX4Zc1nt">
+  <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/a/AVvXsEis64DMk_3-uwcnMyzAlE7hWtcD8rhMSFsQtb-A1JmNbfxPg0U2JP08cgxxKNdwnC_s2hvbNxUK5MqctD3FoIxXmL2Dr5WQTT6nv71Seo-LavvKArKyT9eSwFMRcCGehQ-u-8naqJ3bwk9nAxIrILhpp_i1i_fkJ5WRc2CKxJpyXJkUxYqlPFInJX4Zc1nt">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <!-- Iconos para el botón de instalar -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* Estilos para el iframe a pantalla completa (Como lo tenías en IP Wallet) */
     body, html { 
       margin: 0; 
       padding: 0; 
       height: 100%; 
       width: 100%; 
       overflow: hidden; 
-      background-color: #f8fafc; /* Color de fondo base de Interplanet */
+      background-color: #f8fafc; 
     }
     iframe { 
       border: none; 
@@ -34,14 +32,13 @@
       display: block; 
     }
 
-    /* Estilos del botón flotante de instalación */
     #btn-instalar {
-      display: none; /* Oculto por defecto */
+      display: none; 
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: #4338ca; /* Azul corporativo */
+      background-color: #4338ca; 
       color: white;
       border: none;
       padding: 12px 24px;
@@ -62,16 +59,30 @@
 </head>
 <body>
 
-  <!-- BOTÓN DE INSTALACIÓN -->
   <button id="btn-instalar">
     <i class="fa-solid fa-download"></i> Instalar App
   </button>
 
-  <!-- AQUÍ PONES EL ENLACE DE TU SCRIPT DE INTERPLANET antes https://script.google.com/macros/s/AKfycbxqoW3DZjCZkonWOkKF-5yKlSferMF0rQsnEtbexRKT19WnqNdw7ZRlg2wCOHbwJ48rLQ/exec-->
-  <iframe src="https://script.google.com/macros/s/AKfycbzPoJ1GmjP3Ts9NAja5qPfxVoDjspB3cnHynYUHN4r1RF0i_tjKwkMlMmP7y_0mboC81g/exec" allowfullscreen></iframe>
+  <!-- EL IFRAME INICIA VACÍO, JAVASCRIPT LE PONDRÁ LA URL CORRECTA -->
+  <iframe id="iframe-ip-finanzas" allowfullscreen></iframe>
 
   <script>
-    // 1. REGISTRO DEL SERVICE WORKER (De tu código original)
+    // =========================================================================
+    // 0. LÓGICA DE ENRUTAMIENTO (NUEVO)
+    // =========================================================================
+    // Esta es la URL de tu script de Google principal
+    const urlScriptBase = "https://script.google.com/macros/s/AKfycbxgaL6g-mJm0xxhH7P3XfZaswrixF9J1KKhIh-TTSplMegAJOFCe9tdmnGSIJEzF-wORA/exec";
+    
+    // Obtenemos si hay parámetros en el enlace (ej: ?vista=cliente)
+    const parametros = window.location.search;
+    
+    // Le inyectamos la URL completa al iframe
+    document.getElementById('iframe-ip-finanzas').src = urlScriptBase + parametros;
+
+
+    // =========================================================================
+    // 1. REGISTRO DEL SERVICE WORKER
+    // =========================================================================
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
@@ -84,19 +95,25 @@
       });
     }
 
+    // =========================================================================
     // 2. LÓGICA DEL BOTÓN DE INSTALACIÓN
+    // =========================================================================
     let eventoInstalacionDiferido;
     const btnInstalar = document.getElementById('btn-instalar');
 
     window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault(); // Evita el banner por defecto
-      eventoInstalacionDiferido = e; // Guarda el evento
-      btnInstalar.style.display = 'flex'; // Muestra nuestro botón flotante
+      e.preventDefault(); 
+      eventoInstalacionDiferido = e; 
+      
+      // No mostramos el botón de instalar si el cliente solo viene a consultar su crédito
+      if (!parametros.includes('vista=cliente')) {
+          btnInstalar.style.display = 'flex'; 
+      }
     });
 
     btnInstalar.addEventListener('click', async () => {
-      btnInstalar.style.display = 'none'; // Oculta el botón
-      eventoInstalacionDiferido.prompt(); // Lanza la ventana nativa del celular
+      btnInstalar.style.display = 'none'; 
+      eventoInstalacionDiferido.prompt(); 
       const { outcome } = await eventoInstalacionDiferido.userChoice;
       eventoInstalacionDiferido = null;
     });
